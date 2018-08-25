@@ -10,10 +10,13 @@ RUN apt-get update \
     && wget http://pcdamtjko.bkt.clouddn.com/mb_warband_dedicated_1171u.zip \
     && unzip mb_warband_dedicated_1171u.zip
 
-RUN dpkg --add-architecture i386 \
+RUN dpkg --add-architecture i386  \
+        && wget -nc https://dl.winehq.org/wine-builds/Release.key \
+        && apt-key add Release.key \
+        && apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
 		&& apt-get update \
-		&& apt-get install -y --no-install-recommends \
-			wine-stable \
+		&& apt-get install --install-recommends \
+			winehq-stable \
         && rm -rf /var/lib/apt/lists/* 
 
 ENV WARBAND_DIR /Mount\&Blade\ Warband\ Dedicated/
