@@ -7,8 +7,7 @@ RUN apt-get update \
 		wget \
 		screen \
         dos2unix \
-    && wget http://pcdamtjko.bkt.clouddn.com/mb_warband_dedicated_1171u.zip \
-    && unzip mb_warband_dedicated_1171u.zip
+        git 
 
 RUN dpkg --add-architecture i386  \
         && wget -nc https://dl.winehq.org/wine-builds/Release.key \
@@ -19,9 +18,11 @@ RUN dpkg --add-architecture i386  \
 			winehq-stable \
         && rm -rf /var/lib/apt/lists/* 
 
-ENV WARBAND_DIR /Mount\&Blade\ Warband\ Dedicated/
+RUN git clone https://github.com/Fmods/Dedicated.git --recursive
 
-WORKDIR Mount\&Blade\ Warband\ Dedicated/
+ENV WARBAND_DIR Dedicated/
+
+WORKDIR Dedicated/
 EXPOSE 7240/udp
 COPY run.sh $WARBAND_DIR
 RUN chmod +x run.sh
